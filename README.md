@@ -1,4 +1,4 @@
 eastertime
 ==========
 
-GOLANG package to sompute easter date / time
+GOLANG package to compute easter date / time
