@@ -11,4 +11,4 @@ package provides functions to get
 It uses  Delambre Butcher and Meeus Julian algorithms
 
 # License
-BSD
+see LICENSE file https://github.com/vjeantet/eastertime/blob/master/LICENSE
