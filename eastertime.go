@@ -1,28 +1,31 @@
+// eastertime provides functions to get midnight date time of easter day
+// for Catholic and Orthodox on Gregorian Calendar
+// web github/vjeantet/eastertime
+
 package eastertime
 
 import (
-  "time"
 	"errors"
+	"math"
+	"time"
 )
 
-/**
- * return UTC time.Time for midnight on Easter of a given year
- * use Delambre and Butcher's algorithm Western Gregorian dates
- *
- * @param int year The year as a number greater than 0
- * @return time.Time The easter date as a time.Time
- * @return errors.Error Error if exists, else nil
- **/
-func Byyear(year int) (time.Time, error) {
+// CatholicByYear returns time.Time for midnight on Catholic Easter of a given year
+// use Delambre and Butcher's and return time based on Gregorian calendar
+//
+// @param int year The year as a number greater than 0
+// @return time.Time The easter date as a time.Time
+// @return errors.Error Error if exists, else nil
+func CatholicByYear(year int) (time.Time, error) {
 	var a, b, c, d, e, r int
 
-  if year < 0 {
-  	return  time.Now(), errors.New("year have to be greater than 0")
-  }
+	if year < 0 {
+		return time.Now(), errors.New("year have to be greater than 0")
+	}
 
-  a = year % 19
+	a = year % 19
 	if year >= 1583 {
-	  var f, g, h, i, k, l, m int
+		var f, g, h, i, k, l, m int
 		b = year / 100
 		c = year % 100
 		d = b / 4
@@ -44,4 +47,32 @@ func Byyear(year int) (time.Time, error) {
 	}
 
 	return time.Date(year, time.March, r, 0, 0, 0, 0, time.Local), nil
+}
+
+// OrthodoxByYear returns time.Time for midnight on Orthodox Easter of a given year
+// use Meeus Julian algorithm and return time based on Gregorian calendar
+//
+// @param int year The year as a number greater than 325
+// @return time.Time The easter date as a time.Time
+// @return errors.Error Error if exists, else nil
+func OrthodoxByYear(year int) (time.Time, error) {
+
+	if year < 326 {
+		return time.Now(), errors.New("year have to be greater than 325")
+	}
+
+	var a, b, c, d, e int
+	var month time.Month
+	var day float64
+
+	a = year % 4
+	b = year % 7
+	c = year % 19
+	d = (19*c + 15) % 30
+	e = (2*a + 4*b - d + 34) % 7
+	month = time.Month((d + e + 114) / 31)
+	day = math.Floor(float64((d+e+114)%31 + 1))
+	day = day + 13
+
+	return time.Date(year, month, int(day), 0, 0, 0, 0, time.Local), nil
 }
