@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vjeantet/eastertime.png)](https://travis-ci.org/vjeantet/vjeantet/eastertime)
+
 easter time for go (GOLANG)
 ==========
 
