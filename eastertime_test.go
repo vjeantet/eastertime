@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-var fixture_catholic = []time.Time{
+var fixtureCatholic = []time.Time{
 	time.Date(2016, 3, 27, 0, 0, 0, 0, time.Local),
 	time.Date(2015, 4, 5, 0, 0, 0, 0, time.Local),
 	time.Date(2014, 4, 20, 0, 0, 0, 0, time.Local),
@@ -61,7 +61,7 @@ var fixture_catholic = []time.Time{
 	time.Date(2039, 04, 10, 0, 0, 0, 0, time.Local),
 }
 
-var fixture_orthodox = []time.Time{
+var fixtureOrthodox = []time.Time{
 	time.Date(2008, 4, 27, 0, 0, 0, 0, time.Local),
 	time.Date(2009, 4, 19, 0, 0, 0, 0, time.Local),
 	time.Date(2010, 4, 4, 0, 0, 0, 0, time.Local),
@@ -72,14 +72,14 @@ func TestCatholicByYear(t *testing.T) {
 	var res, expectedTime time.Time
 	var err error
 	// For each year's time in fixtures, compute easter time
-	for _, expectedTime = range fixture_catholic {
+	for _, expectedTime = range fixtureCatholic {
 		res, _ = CatholicByYear(expectedTime.Year())
 		if res != expectedTime {
 			t.Errorf("WesternByYear should return %#v, but returns %#v\n", expectedTime, res)
 		}
 	}
 
-	// Test Error when given year is not gretter then 0
+	// Test Error when given year is not greater then 0
 	res, err = CatholicByYear(-2)
 	if err == nil {
 		t.Error("WesternByYear should return an error, but returns null\n")
@@ -91,14 +91,14 @@ func TestOrthodoxByYear(t *testing.T) {
 	var err error
 
 	// For each year's time in fixtures, compute easter time
-	for _, expectedTime = range fixture_orthodox {
+	for _, expectedTime = range fixtureOrthodox {
 		res, _ = OrthodoxByYear(expectedTime.Year())
 		if res != expectedTime {
 			t.Errorf("EasternByYear should return %#v, but returns %#v\n", expectedTime.Format("02-01-2006"), res.Format("02-01-2006"))
 		}
 	}
 
-	// Test Error when given year is not gretter then 326
+	// Test Error when given year is not greater then 326
 	res, err = OrthodoxByYear(325)
 	if err == nil {
 		t.Error("EasternByYear should return an error, but returns null\n")
